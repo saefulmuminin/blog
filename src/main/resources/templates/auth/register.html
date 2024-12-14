@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id" class="light-style customizer-hide" dir="ltr" data-theme="theme-default" data-assets-path="../assets/" data-template="vertical-menu-template-free" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Pendaftaran - Blog</title>
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/img/favicon/favicon.ico}" />
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans&display=swap" rel="stylesheet" />
+
+    <!-- Ikon -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/boxicons.css}" />
+
+    <!-- CSS Inti -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/css/core.css}" class="template-customizer-core-css" />
+    <link rel="stylesheet" th:href="@{/assets/vendor/css/theme-default.css}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" th:href="@{/assets/css/demo.css}" />
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css}" />
+    <link rel="stylesheet" th:href="@{/assets/vendor/css/pages/page-auth.css}" />
+
+    <!-- Pembantu -->
+    <script th:src="@{/assets/vendor/js/helpers.js}"></script>
+    <script th:src="@{/assets/js/config.js}"></script>
+  </head>
+
+  <body>
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+          <!-- Form Pendaftaran -->
+          <div class="card">
+            <div class="card-body">
+              <!-- Logo -->
+              <div class="app-brand justify-content-center">
+                <a th:href="@{/}" class="app-brand-link gap-2">
+                  <span class="app-brand-logo demo">
+                    <img
+                      th:src="@{/assets/img/logo.png}"
+                      alt="Logo"
+                      width="50"
+                    />
+                  </span>
+                  <span class="app-brand-text demo text-body fw-bolder"
+                    >blog</span
+                  >
+                </a>
+              </div>
+
+              <h4 class="mb-2">Daftar untuk akun Anda 🚀</h4>
+              <p class="mb-4">Isi formulir di bawah untuk membuat akun Anda.</p>
+
+              <form method="POST" th:action="@{/registration}" th:object="${user}" id="formAuthentication" class="mb-3">
+                <!-- Pesan Sukses -->
+                <div th:if="${param.success}">
+                  <div class="alert alert-info">Pendaftaran berhasil!</div>
+                </div>
+
+                <!-- Kolom Nama -->
+                <div class="mb-3">
+                  <label for="name" class="form-label">Nama</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    placeholder="Masukkan nama Anda"
+                    th:field="*{name}"
+                    required
+                  />
+                  <p class="text-danger" th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></p>
+                </div>
+
+                <!-- Kolom Email -->
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Masukkan email Anda"
+                    th:field="*{email}"
+                    required
+                  />
+                  <p class="text-danger" th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></p>
+                </div>
+
+                <!-- Kolom Password -->
+                <div class="mb-3">
+                  <label for="password" class="form-label">Kata Sandi</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    placeholder="Masukkan kata sandi Anda"
+                    th:field="*{password}"
+                    required
+                  />
+                  <p class="text-danger" th:errors="*{password}" th:if="${#fields.hasErrors('password')}"></p>
+                </div>
+
+                <!-- Tombol Kirim -->
+                <div class="mb-3">
+                  <button class="btn-primary d-grid w-100 mb-2 p-2 rounded" type="submit">Daftar</button>
+                </div>
+              </form>
+
+              <!-- Tautan Masuk -->
+              <p class="text-center">
+                <span>Sudah memiliki akun?</span>
+                <a th:href="@{/login}">
+                  <span>Masuk</span>
+                </a>
+              </p>
+            </div>
+          </div>
+          <!-- /Form Pendaftaran -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Core JS -->
+    <script th:src="@{/assets/vendor/js/core.js}"></script>
+  </body>
+</html>

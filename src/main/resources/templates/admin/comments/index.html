@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/app.html}">
+<head>
+    <title th:text="${title ?: 'Comments'}">Comments</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4">Comments List</h4>
+            
+            <div class="card">
+                <div class="table-responsive text-nowrap">
+                    <table class="table">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>User</th>
+                                <th>Content</th>
+                                <th>News ID</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody th:each="comment, iterStat : ${comments}">
+                            <tr>
+                                <td th:text="${iterStat.index + 1}">1</td>
+                                <td th:text="${comment.user?.name}">John Doe</td>
+                                <td th:text="${comment.content}">Sample Comment</td>
+                                <td th:text="${comment.newsId}">123</td>
+                                <td>
+                                    <a th:href="@{/admin/comments/edit/{id}(id=${comment.id})}" class="btn btn-sm btn-primary">Edit</a>
+                                    <a th:href="@{/admin/comments/delete/{id}(id=${comment.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

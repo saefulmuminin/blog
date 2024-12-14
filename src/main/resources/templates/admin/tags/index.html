@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/app.html}">
+<head>
+    <title th:text="${title ?: 'Tags'}">Tags</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4">Tags List</h4>
+            
+            <div class="card">
+                <div class="table-responsive text-nowrap">
+                    <table class="table">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Tag Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody th:each="tag, iterStat : ${tags}">
+                            <tr>
+                                <td th:text="${iterStat.index + 1}">1</td>
+                                <td th:text="${tag.name}">Sample Tag</td>
+                                <td>
+                                    <a th:href="@{/admin/tags/edit/{id}(id=${tag.id})}" class="btn btn-sm btn-primary">Edit</a>
+                                    <a th:href="@{/admin/tags/delete/{id}(id=${tag.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
