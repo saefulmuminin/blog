@@ -1,12 +1,15 @@
 package com.blog.blog.service;
+
 import com.blog.blog.model.User;
 import com.blog.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
 
 import java.util.stream.Collectors;
 
@@ -30,5 +33,17 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Email atau kata sandi tidak valid");
         }
     }
+
+    public User getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     
+        if (authentication != null && authentication.isAuthenticated() &&
+            !"anonymousUser".equals(authentication.getPrincipal())) {
+            
+            // Ambil CustomUserDetails dari autentikasi
+            CustomUserDetailsService userDetails = (CustomUserDetailsService) authentication.getPrincipal();
+            return userDetails.getUser(); // Kembalikan User dari CustomUserDetails
+        }
+        return null; // Jika user belum login
+    }
 }

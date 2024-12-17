@@ -16,6 +16,7 @@
                         <thead class="table-light">
                             <tr>
                                 <th>#</th>
+                                <th>Image</th>
                                 <th>Title</th>
                                 <th>Category</th>
                                 <th>Tags</th>
@@ -25,6 +26,12 @@
                         <tbody th:each="news, iterStat : ${newsList}">
                             <tr>
                                 <td th:text="${iterStat.index + 1}">1</td>
+                                <td>
+                                    <img th:src="@{/uploads/{imageName}(imageName=${news.image})}" 
+                                         alt="News Image" 
+                                         class="img-thumbnail" 
+                                         style="width: 60px; height: 40px; object-fit: cover;">
+                                </td>
                                 <td th:text="${news.title}">Sample News</td>
                                 <td th:text="${news.category.name}">Sample Category</td>
                                 <td>

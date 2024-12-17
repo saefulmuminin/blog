@@ -68,9 +68,9 @@ public class AuthController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String role = userDetails.getAuthorities().toString(); // Mendapatkan role
 
-        if (role.contains("ADMIN")) {
+        if (role.contains("ROLE_ADMIN")) {
             return "redirect:/admin/dashboard"; // Redirect ke dashboard admin
-        } else if (role.contains("USER")) {
+        } else if (role.contains("ROLE_USER")) {
             return "redirect:/user/dashboard"; // Redirect ke dashboard user
         } else {
             return "redirect:/"; // Redirect ke halaman default

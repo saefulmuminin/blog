@@ -1,47 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{layouts/app.html}">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layouts/app.html}">
 <head>
-    <title th:text="${title ?: 'Create News'}">Create News</title>
+    <title>Create News</title>
 </head>
 <body>
-    <div layout:fragment="content">
-        <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4">Create News</h4>
-            
-            <div class="card">
-                <div class="card-body">
-                    <form th:action="@{/admin/news/create}" method="post">
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" id="title" name="title" class="form-control" placeholder="Enter News Title" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="content" class="form-label">Content</label>
-                            <textarea id="content" name="content" class="form-control" rows="4" placeholder="Enter News Content" required></textarea>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="categoryId" class="form-label">Category</label>
-                            <select id="categoryId" name="categoryId" class="form-select">
-                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category Name</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="tags" class="form-label">Tags</label>
-                            <select id="tags" name="tags" class="form-select" multiple>
-                                <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}">Tag Name</option>
-                            </select>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </form>
-                </div>
+<div layout:fragment="content">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4">Create News</h4>
+
+        <div class="card">
+            <div class="card-body">
+                <form action="/admin/news/save" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title:</label>
+                        <input type="text" id="title" name="title" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Content:</label>
+                        <textarea id="content" name="content" class="form-control" rows="5" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category:</label>
+                        <select id="category" name="category" class="form-control" required>
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tags" class="form-label">Tags:</label>
+                        <select id="tags" name="tags" class="form-control" multiple>
+                            <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"></option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="imageFile" class="form-label">Image:</label>
+                        <input type="file" id="imageFile" name="imageFile" class="form-control-file">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Create News</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

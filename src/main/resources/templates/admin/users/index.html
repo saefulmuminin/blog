@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/app.html}">
+<head>
+    <title th:text="${title ?: 'Daftar Pengguna'}">Daftar Pengguna</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h1 class="mb-4">Daftar Pengguna</h1>
+
+            <!-- Tombol Tambah Pengguna -->
+            <a th:href="@{/admin/users/create}" class="btn btn-primary mb-3">Tambah Pengguna Baru</a>
+
+            <!-- Tabel Pengguna -->
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.name}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td>
+                            <ul class="list-unstyled">
+                                <li th:each="role : ${user.roles}" th:text="${role.name}"></li>
+                            </ul>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/users/delete/{id}(id=${user.id})}" 
+                               class="btn btn-danger btn-sm" 
+                               onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

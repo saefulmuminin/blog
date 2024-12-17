@@ -14,9 +14,9 @@ public class TagService {
     @Autowired
     private TagRepository tagRepository;
 
-    // Create or Update tag
-    public Tag saveTag(Tag tag) {
-        return tagRepository.save(tag);
+    // Get all tags
+    public List<Tag> getAllTags() {
+        return tagRepository.findAll();
     }
 
     // Get tag by ID
@@ -24,23 +24,26 @@ public class TagService {
         return tagRepository.findById(id);
     }
 
-    // Get all tags
-    public List<Tag> getAllTags() {
-        return tagRepository.findAll();
-    }
-
-    // Get tag by name
-    public List<Tag> getTagsByName(String name) {
-        return tagRepository.findByName(name);
-    }
-
-    // Search tags by name
-    public List<Tag> searchTagsByName(String name) {
-        return tagRepository.findByNameContaining(name);
+    // Save or update a tag
+    public Tag saveOrUpdateTag(Tag tag) {
+        return tagRepository.save(tag);
     }
 
     // Delete tag by ID
     public void deleteTag(Long id) {
         tagRepository.deleteById(id);
+    }
+
+    // Find tags by name
+    public List<Tag> findTagsByName(String name) {
+        return tagRepository.findByNameContaining(name);
+    }
+
+    // Find Tags by an array of IDs
+    public List<Tag> findByIds(Long tagId) {
+        if (tagId == null || tagId == 0) {
+            return List.of();
+        }
+        return tagRepository.findAllById(List.of(tagId));
     }
 }

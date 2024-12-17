@@ -9,7 +9,9 @@
     <div layout:fragment="content">
         <div class="container-xxl flex-grow-1 container-p-y">
             <h4 class="fw-bold py-3 mb-4">Category List</h4>
-            
+            <div class="mb-3">
+                <a href="/admin/categories/create" class="btn btn-primary">Create New Tag</a>
+            </div>
             <div class="card">
                 <div class="table-responsive text-nowrap">
                     <table class="table">
@@ -27,8 +29,8 @@
                                 <td th:text="${category.name}">Sample Category</td>
                                 <td th:text="${category.description}">Sample Description</td>
                                 <td>
-                                    <a th:href="@{/admin/category/edit/{id}(id=${category.id})}" class="btn btn-sm btn-primary">Edit</a>
-                                    <a th:href="@{/admin/category/delete/{id}(id=${category.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                    <a th:href="@{/admin/categories/edit/{id}(id=${category.id})}" class="btn btn-sm btn-primary">Edit</a>
+                                    <a th:href="@{/admin/categories/delete/{id}(id=${category.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
                                 </td>
                             </tr>
                         </tbody>

@@ -1,31 +1,31 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{layouts/app.html}">
 <head>
-    <title th:text="${title ?: 'Create Comment'}">Create Comment</title>
+    <title th:text="${title ?: 'Manage Comments'}">Manage Comments</title>
 </head>
 <body>
     <div layout:fragment="content">
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4">Create Comment</h4>
-            
             <div class="card">
                 <div class="card-body">
-                    <form th:action="@{/admin/comments/create}" method="post">
+                    <h1>Buat Komentar Baru</h1>
+                    <div th:if="${message}" th:text="${message}" class="alert alert-success"></div>
+
+                    <form th:action="@{/admin/comments/save}" th:object="${comment}" method="post">
                         <div class="mb-3">
-                            <label for="userId" class="form-label">User ID</label>
-                            <input type="number" id="userId" name="userId" class="form-control" placeholder="Enter User ID" required>
+                            <label for="content" class="form-label">Konten</label>
+                            <textarea id="content" th:field="*{content}" class="form-control" rows="4"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="newsId" class="form-label">News ID</label>
-                            <input type="number" id="newsId" name="newsId" class="form-control" placeholder="Enter News ID" required>
+                            <label for="news" class="form-label">Berita</label>
+                            <select id="news" th:field="*{news.id}" class="form-select">
+                                <option th:each="newsOption : ${newsList}" th:value="${newsOption.id}" th:text="${newsOption.title}"></option>
+                            </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="content" class="form-label">Content</label>
-                            <textarea id="content" name="content" class="form-control" placeholder="Write your comment" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>
                 </div>
             </div>

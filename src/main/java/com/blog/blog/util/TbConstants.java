@@ -1,8 +1,7 @@
 package com.blog.blog.util;
-
 public class TbConstants {
     public static interface Roles {
-        String ADMIN = "ADMIN";
-        String USER = "USER";
+        String ADMIN = "ROLE_ADMIN";
+        String USER = "ROLE_USER";
     }
 }

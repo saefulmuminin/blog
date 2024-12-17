@@ -2,6 +2,8 @@ package com.blog.blog.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tags")
@@ -18,6 +20,9 @@ public class Tag {
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    @ManyToMany(mappedBy = "tags") // Relasi dengan News
+    private Set<News> news = new HashSet<>();
 
     @PrePersist
     public void prePersist() {
@@ -62,5 +67,13 @@ public class Tag {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Set<News> getNews() {
+        return news;
+    }
+
+    public void setNews(Set<News> news) {
+        this.news = news;
     }
 }

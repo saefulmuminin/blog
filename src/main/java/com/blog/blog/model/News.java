@@ -2,8 +2,8 @@ package com.blog.blog.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "news")
@@ -14,32 +14,36 @@ public class News {
     private Long id;
 
     private String title;
-    private String content;
+    
+    @Lob
+    private String content; // Ubah ke tipe text
+
+    private String image; // Kolom untuk menyimpan path atau URL gambar
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    private Category category; // Kolom untuk menyimpan kategori berita
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "news_tags",
             joinColumns = @JoinColumn(name = "news_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private Set<Tag> tags;
+    private Set<Tag> tags; // Koleksi tag berita
 
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
-    private User author;
+    private User author; // Kolom untuk menyimpan pengguna sebagai penulis
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Comment> comments;  // Add this line to fetch comments for the news article
+    private List<Comment> comments; // Koleksi komentar terkait berita
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt; // Waktu berita dibuat
 
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt; // Waktu berita terakhir diperbarui
 
     @PrePersist
     public void prePersist() {
@@ -53,7 +57,8 @@ public class News {
         updatedAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
+    // Getter dan Setter
+
     public Long getId() {
         return id;
     }
@@ -76,6 +81,14 @@ public class News {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Category getCategory() {

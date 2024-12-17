@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News Detail</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        .news-image {
+            height: 400px;
+            object-fit: cover;
+        }
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">News 24</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item" th:each="category : ${categoryList}">
+                    <a class="nav-link" th:href="@{/news/category/{categoryId}(categoryId=${category.id})}" th:text="${category.name}">Category</a>
+                </li>
+                <li class="nav-item" th:each="tag : ${tagList}">
+                    <a class="nav-link" th:href="@{/news/tag/{tagId}(tagId=${tag.id})}" th:text="${tag.name}">Tag</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Navbar End -->
+
+<!-- News Detail Start -->
+<div class="container mt-5">
+    <h4 class="fw-bold py-3 mb-4">News Detail</h4>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <img th:src="@{'/uploads/' + ${news.image}}" class="card-img-top news-image" alt="News Image">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${news.title}">Sample News</h5>
+                    <p class="card-text" th:text="${news.content}">Sample content</p>
+                    <p class="card-text"><small class="text-muted">Category: <span th:text="${news.category.name}">Sample Category</span></small></p>
+                    <p class="card-text">Tags: 
+                        <span th:each="tag : ${news.tags}" th:text="${tag.name}" class="badge badge-primary mr-1">Tag</span>
+                    </p>
+                    <a th:href="@{/news/{newsId}(newsId=${news.id})}" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+            
+            <!-- Comments Section -->
+            <div class="comments-section mt-4">
+                <h5>Comments</h5>
+                <ul class="list-group">
+                    <li class="list-group-item" th:each="comment : ${comments}" th:if="${comments != null}">
+                        <div class="comment">
+                            <p class="font-weight-bold" th:text="${comment.user.name}">Author Name</p>
+                            <p th:text="${comment.content}">Comment Content</p>
+                            <p class="text-muted"><small>Posted on: <span th:text="${comment.createdAt}">Date</span></small></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Comment Form -->
+            <div class="comment-form mt-4">
+                <h5>Post a Comment</h5>
+                <form th:action="@{'/news/' + ${news.id} + '/comment'}" method="post">
+                    <textarea name="content" placeholder="Tambahkan komentar Anda" rows="3"></textarea>
+                    <button type="submit" class="btn btn-primary mt-2">Kirim</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- News Detail End -->
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

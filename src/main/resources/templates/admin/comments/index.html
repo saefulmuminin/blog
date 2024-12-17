@@ -1,40 +1,47 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{layouts/app.html}">
 <head>
-    <title th:text="${title ?: 'Comments'}">Comments</title>
+    <title th:text="${title ?: 'Manage Comments'}">Manage Comments</title>
 </head>
 <body>
     <div layout:fragment="content">
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4">Comments List</h4>
-            
+            <h4 class="fw-bold py-3 mb-4">Manage Comments</h4>
+            <a href="/admin/comments/create" class="btn btn-primary mb-3">Create New Comment</a>
             <div class="card">
-                <div class="table-responsive text-nowrap">
-                    <table class="table">
-                        <thead class="table-light">
+                <div class="card-body">
+                    <!-- Masukkan view dari `index.html` di sini -->
+                    <h1>Daftar Komentar</h1>
+                    <div th:if="${message}" th:text="${message}" class="alert alert-success"></div>
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
                             <tr>
-                                <th>#</th>
-                                <th>User</th>
-                                <th>Content</th>
-                                <th>News ID</th>
-                                <th>Actions</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Konten</th>
+                                <th scope="col">Berita</th>
+                                <th scope="col">Pemilik</th>
+                                <th scope="col">Tanggal Dibuat</th>
+                                <th scope="col">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody th:each="comment, iterStat : ${comments}">
-                            <tr>
-                                <td th:text="${iterStat.index + 1}">1</td>
-                                <td th:text="${comment.user?.name}">John Doe</td>
-                                <td th:text="${comment.content}">Sample Comment</td>
-                                <td th:text="${comment.newsId}">123</td>
+                        <tbody>
+                            <tr th:each="comment : ${commentList}">
+                                <td th:text="${comment.id}"></td>
+                                <td th:text="${comment.content}"></td>
+                                <td th:text="${comment.news.title}"></td>
+                                <td th:text="${comment.user.name}"></td>
+                                <td th:text="${comment.createdAt}"></td>
                                 <td>
-                                    <a th:href="@{/admin/comments/edit/{id}(id=${comment.id})}" class="btn btn-sm btn-primary">Edit</a>
-                                    <a th:href="@{/admin/comments/delete/{id}(id=${comment.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                    <a th:href="@{/admin/comments/edit/{id}(id=${comment.id})}" class="btn btn-primary btn-sm">Edit</a>
+                                    <a th:href="@{/admin/comments/delete/{id}(id=${comment.id})}" class="btn btn-danger btn-sm" th:onclick="return confirm('Apakah Anda yakin ingin menghapus komentar ini?')">Hapus</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
         </div>
